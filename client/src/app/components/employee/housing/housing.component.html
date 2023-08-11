@@ -1,0 +1,95 @@
+<app-navbar-employee></app-navbar-employee>
+<div *ngIf="houseInfo$ | async as houseInfo">
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>House Information</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="50">
+        <p>
+          <strong>Address:</strong> {{ houseInfo.address.street }},
+          {{ houseInfo.address.city }}, {{ houseInfo.address.state }},
+          {{ houseInfo.address.zip }}
+        </p>
+      </div>
+      <div fxFlex="50">
+        <p class="rootmate-header"><strong>Roommates:</strong></p>
+        <ul>
+          <li *ngFor="let roommate of houseInfo.employees">
+            <span class="roommate-info"
+              ><strong>Name:</strong> {{ roommate.firstName }}
+              {{ roommate.lastName }}</span
+            >
+            <span>&nbsp;</span>
+            <span class="roommate-info"
+              ><strong>Phone:</strong> {{ roommate.cellPhoneNumber }}</span
+            >
+          </li>
+        </ul>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Facility Report</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="report-form">
+      <mat-form-field class="report-form-input">
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          id="title"
+          type="text"
+          formControlName="title"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field class="report-form-input">
+        <mat-label>Description</mat-label>
+        <textarea
+          matInput
+          id="description"
+          formControlName="description"
+          required
+        ></textarea>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!reportForm.valid"
+      >
+        Submit Report
+      </button>
+    </form>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="48" *ngFor="let report of facilityReports$ | async">
+        <div class="report-item" fxLayout="column" fxLayoutGap="5px">
+          <div><strong>Title:</strong> {{ report.title }}</div>
+          <div><strong>Description:</strong> {{ report.description }}</div>
+          <div>
+            <strong>Reported By:</strong> {{ report.createdBy.firstName }}
+            {{ report.createdBy.lastName }}
+          </div>
+          <div>
+            <strong>Timestamp:</strong> {{ report.timestamp | date : "medium" }}
+          </div>
+          <div><strong>Status:</strong> {{ report.status }}</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

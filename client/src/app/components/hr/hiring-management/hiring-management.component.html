@@ -1,0 +1,58 @@
+<app-navbar-hr></app-navbar-hr>
+<div class="body">
+  <h2>Registration Token</h2>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Email" [(ngModel)]="email" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Name" [(ngModel)]="name" />
+  </mat-form-field>
+  <br />
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onGenerateTokenAndSendEmail(email, name)"
+  >
+    Generate token and send email
+  </button>
+  <hr />
+
+  <h2>Pending Applications</h2>
+  <div *ngFor="let application of pendingApplications$ | async">
+    <h3>Name: {{ application.firstName }} {{ application.lastName }}</h3>
+    <p>Email: {{ application.email }}</p>
+    <button mat-raised-button (click)="viewApplication(application._id)">
+      View Application
+    </button>
+    <hr />
+  </div>
+  <ng-container *ngIf="!(pendingApplications$ | async)?.length">
+    <p>No results found</p>
+  </ng-container>
+
+  <h2>Rejected Applications</h2>
+  <div *ngFor="let application of rejectedApplications$ | async">
+    <h3>Name: {{ application.firstName }} {{ application.lastName }}</h3>
+    <p>{{ application.email }}</p>
+    <button mat-raised-button (click)="viewApplication(application._id)">
+      View Application
+    </button>
+    <hr />
+  </div>
+  <ng-container *ngIf="!(rejectedApplications$ | async)?.length">
+    <p>No results found</p>
+  </ng-container>
+
+  <h2>Approved Applications</h2>
+  <div *ngFor="let application of approvedApplications$ | async">
+    <h3>Name: {{ application.firstName }} {{ application.lastName }}</h3>
+    <p>{{ application.email }}</p>
+    <button mat-raised-button (click)="viewApplication(application._id)">
+      View Application
+    </button>
+    <hr />
+  </div>
+  <ng-container *ngIf="!(approvedApplications$ | async)?.length">
+    <p>No results found</p>
+  </ng-container>
+</div>

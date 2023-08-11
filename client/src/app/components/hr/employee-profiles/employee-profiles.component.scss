@@ -1,0 +1,18 @@
+.body {
+  margin: 30px;
+}
+
+.employee-profiles {
+  .profiles {
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: black;
+  }
+
+  p {
+    margin: 0;
+  }
+}

@@ -1,0 +1,31 @@
+.section {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  color: black;
+}
+
+mat-card-content {
+  margin-top: 20px;
+}
+
+.roommate-info {
+  margin-right: 40px;
+}
+
+.report-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.report-form {
+  min-width: 100px;
+  max-width: 400px;
+  width: 100%;
+  margin-left: 12px;
+}
+
+.report-form-input {
+  width: 100%;
+}

@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-group">
+    <h2 class="text-center">Login</h2>
+
+    <mat-form-field>
+      <mat-label>Username or Email</mat-label>
+      <input
+        matInput
+        id="usernameOrEmail"
+        type="text"
+        formControlName="usernameOrEmail"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        id="password"
+        type="password"
+        formControlName="password"
+      />
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </div>
+  </form>
+</div>

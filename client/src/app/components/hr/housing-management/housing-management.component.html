@@ -1,0 +1,78 @@
+<app-navbar-hr></app-navbar-hr>
+<div class="body">
+  <div *ngIf="houses$ | async as houses">
+    <div *ngFor="let house of houses">
+      <div class="house-summary">
+        <h2>
+          {{ house.address.street }}, {{ house.address.city }},
+          {{ house.address.state }}
+        </h2>
+        <p>Landlord: {{ house.landlordName }}</p>
+        <p>Phone: {{ house.landlordPhone }}</p>
+        <p>Email: {{ house.landlord_email }}</p>
+        <p>Number of Residents: {{ house.residentsNum }}</p>
+      </div>
+    </div>
+
+    <!-- Form for adding new houses -->
+    <div class="add-house-form">
+      <form [formGroup]="newHouseForm" (ngSubmit)="addHouse()">
+        <mat-form-field appearance="fill">
+          <mat-label>Address Street</mat-label>
+          <input matInput formControlName="addressStreet" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Address City</mat-label>
+          <input matInput formControlName="addressCity" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Address State</mat-label>
+          <input matInput formControlName="addressState" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Address Zipcode</mat-label>
+          <input matInput formControlName="addressZipcode" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Landlord Name</mat-label>
+          <input matInput formControlName="landlordName" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Landlord Phone</mat-label>
+          <input matInput formControlName="landlordPhone" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Landlord Email</mat-label>
+          <input matInput formControlName="landlord_email" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of Residents</mat-label>
+          <input matInput formControlName="residentsNum" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of Beds</mat-label>
+          <input matInput formControlName="bedsNum" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of Mattresses</mat-label>
+          <input matInput formControlName="mattressesNum" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of Tables</mat-label>
+          <input matInput formControlName="tablesNum" />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Number of Chairs</mat-label>
+          <input matInput formControlName="chairsNum" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">
+          Add House
+        </button>
+      </form>
+    </div>
+
+    <div *ngIf="error$ | async as error">
+      <!-- Display error message here -->
+    </div>
+  </div>
+</div>

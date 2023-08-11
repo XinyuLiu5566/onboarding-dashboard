@@ -1,0 +1,307 @@
+<app-navbar-hr></app-navbar-hr>
+<div class="body">
+  <h2>In Progress</h2>
+  <div *ngFor="let user of visaStatusList$ | async">
+    <div *ngIf="user.citizenStatus.allDocumentsApproved === false">
+      <hr />
+      <h3>
+        <strong>Name: {{ user.firstName }} {{ user.lastName }}</strong>
+      </h3>
+      <h3>
+        <strong
+          >Work Authorization:
+          {{ user.citizenStatus.workAuthorization }}</strong
+        >
+      </h3>
+      <p>Start Date: {{ user.citizenStatus.startDate | date }}</p>
+      <p>End Date: {{ user.citizenStatus.endDate | date }}</p>
+      <p>
+        Number of Days Remaining:
+        {{
+          getRemainingDays(
+            user.citizenStatus.startDate,
+            user.citizenStatus.endDate
+          )
+        }}
+      </p>
+      <h3>
+        <strong>Next Steps</strong>
+      </h3>
+      <!-- Onboarding Status feedback -->
+      <ng-container *ngIf="user.isApproved && user.isApproved === 'pending'">
+        <h3>Onboarding Status</h3>
+        <p>Onboarding Status: {{ user.isApproved }}</p>
+      </ng-container>
+      <!-- OPT Receipt Status feedback -->
+      <ng-container
+        *ngIf="
+          user.citizenStatus.optReceipt.file &&
+          user.citizenStatus.optReceipt.status === 'pending'
+        "
+      >
+        <h3>OPT Receipt Status</h3>
+        <p>Status: {{ user.citizenStatus.optReceipt.status }}</p>
+        <a
+          mat-button
+          [href]="user.citizenStatus.optReceipt.file"
+          target="_blank"
+          >View Document</a
+        >
+        <p>Feedback: {{ user.citizenStatus.optReceipt.feedback }}</p>
+        <mat-form-field class="example-full-width">
+          <textarea
+            matInput
+            placeholder="Leave a feedback"
+            [(ngModel)]="feedback"
+          ></textarea>
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="updateOptReceiptStatus(user._id, 'Approved', feedback)"
+        >
+          Approve
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="updateOptReceiptStatus(user._id, 'Rejected', feedback)"
+        >
+          Reject
+        </button>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          user.citizenStatus.optEad.file &&
+          user.citizenStatus.optEad.status === 'Pending'
+        "
+      >
+        <h3>OPT EAD Status</h3>
+        <p>Status: {{ user.citizenStatus.optEad.status }}</p>
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.optEad.file"
+          target="_blank"
+          >View Document</a
+        >
+        <p>Feedback: {{ user.citizenStatus.optEad.feedback }}</p>
+        <mat-form-field class="example-full-width">
+          <textarea
+            matInput
+            placeholder="Leave a feedback"
+            [(ngModel)]="feedback"
+          ></textarea>
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="updateOptEadStatus(user._id, 'Approved', feedback)"
+        >
+          Approve
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="updateOptEadStatus(user._id, 'Rejected', feedback)"
+        >
+          Reject
+        </button>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          user.citizenStatus.i983.file &&
+          user.citizenStatus.i983.status === 'Pending'
+        "
+      >
+        <h3>I-983 Status</h3>
+        <p>Status: {{ user.citizenStatus.i983.status }}</p>
+        <p>Document:</p>
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.i983.file"
+          target="_blank"
+          >View Document</a
+        >
+        <br />
+        <p>Feedback: {{ user.citizenStatus.i983.feedback }}</p>
+        <mat-form-field class="example-full-width">
+          <textarea
+            matInput
+            placeholder="Leave a feedback"
+            [(ngModel)]="feedback"
+          ></textarea>
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="updateI983Status(user._id, 'Approved', feedback)"
+        >
+          Approve
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="updateI983Status(user._id, 'Rejected', feedback)"
+        >
+          Reject
+        </button>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          user.citizenStatus.i20.file &&
+          user.citizenStatus.i20.status === 'Pending'
+        "
+      >
+        <h3>I-20 Status</h3>
+        <p>Status: {{ user.citizenStatus.i20.status }}</p>
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.i20.file"
+          target="_blank"
+          >View Document</a
+        >
+        <p>Feedback: {{ user.citizenStatus.i20.feedback }}</p>
+        <mat-form-field class="example-full-width">
+          <textarea
+            matInput
+            placeholder="Leave a feedback"
+            [(ngModel)]="feedback"
+          ></textarea>
+        </mat-form-field>
+        <br />
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="updateI20Status(user._id, 'Approved', feedback)"
+        >
+          Approve
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="updateI20Status(user._id, 'Rejected', feedback)"
+        >
+          Reject
+        </button>
+      </ng-container>
+      <hr />
+    </div>
+  </div>
+  <br />
+  <h2>All</h2>
+  <mat-form-field class="example-full-width">
+    <input
+      matInput
+      [formControl]="searchControl"
+      placeholder="Search Employee"
+    />
+  </mat-form-field>
+
+  <div *ngFor="let user of filteredVisaStatusList$ | async">
+    <hr />
+    <h3>
+      <strong>Name: {{ user.firstName }} {{ user.lastName }}</strong>
+    </h3>
+    <h3>
+      <strong
+        >Work Authorization: {{ user.citizenStatus.workAuthorization }}</strong
+      >
+    </h3>
+    <p>Start Date: {{ user.citizenStatus.startDate | date }}</p>
+    <p>End Date: {{ user.citizenStatus.endDate | date }}</p>
+    <p>
+      Number of Days Remaining:
+      {{
+        getRemainingDays(
+          user.citizenStatus.startDate,
+          user.citizenStatus.endDate
+        )
+      }}
+    </p>
+    <h3>
+      <strong>Next Steps</strong>
+    </h3>
+    <!-- Onboarding Status feedback -->
+    <ng-container *ngIf="user.isApproved">
+      <h3>Onboarding Status</h3>
+      <p>Onboarding Status: {{ user.isApproved }}</p>
+    </ng-container>
+    <!-- OPT Receipt Status feedback -->
+    <ng-container *ngIf="user.citizenStatus.optReceipt">
+      <h3>OPT Receipt Status</h3>
+      <p>Status: {{ user.citizenStatus.optReceipt.status }}</p>
+      <ng-container *ngIf="user.citizenStatus.optReceipt.file">
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.optReceipt.file"
+          target="_blank"
+          >View Document</a
+        >
+      </ng-container>
+      <ng-container *ngIf="user.citizenStatus.optReceipt.feedback">
+        <p>Feedback: {{ user.citizenStatus.optReceipt.feedback }}</p>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="user.citizenStatus.optEad">
+      <h3>OPT EAD Status</h3>
+      <p>Status: {{ user.citizenStatus.optEad.status }}</p>
+      <ng-container *ngIf="user.citizenStatus.optEad.file">
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.optEad.file"
+          target="_blank"
+          >View Document</a
+        >
+      </ng-container>
+      <ng-container *ngIf="user.citizenStatus.optEad.feedback">
+        <p>Feedback: {{ user.citizenStatus.optEad.feedback }}</p>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="user.citizenStatus.i983.file">
+      <h3>I-983 Status</h3>
+      <p>Status: {{ user.citizenStatus.i983.status }}</p>
+      <ng-container *ngIf="user.citizenStatus.i983.file">
+        <p>Document:</p>
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.i983.file"
+          target="_blank"
+          >View Document</a
+        >
+      </ng-container>
+      <br />
+      <ng-container *ngIf="user.citizenStatus.i983.feedback">
+        <p>Feedback: {{ user.citizenStatus.i983.feedback }}</p>
+      </ng-container>
+      <br />
+    </ng-container>
+
+    <ng-container *ngIf="user.citizenStatus.i20">
+      <h3>I-20 Status</h3>
+      <p>Status: {{ user.citizenStatus.i20.status }}</p>
+      <ng-container *ngIf="user.citizenStatus.i20.file">
+        <a
+          mat-raised-button
+          [href]="user.citizenStatus.i20.file"
+          target="_blank"
+          >View Document</a
+        >
+      </ng-container>
+      <ng-container *ngIf="user.citizenStatus.i20.feedback">
+        <p>Feedback: {{ user.citizenStatus.i20.feedback }}</p>
+      </ng-container>
+    </ng-container>
+    <br />
+  </div>
+  <div *ngIf="(filteredVisaStatusList$ | async)?.length == 0">
+    <h4>No search results found.</h4>
+  </div>
+</div>

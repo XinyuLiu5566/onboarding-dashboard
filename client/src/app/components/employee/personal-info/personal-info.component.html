@@ -1,0 +1,542 @@
+<app-navbar-employee></app-navbar-employee>
+
+<div *ngIf="personalInfo$ | async as personalInfo">
+  <div *ngIf="!editing; else editMode">
+    <button
+      class="edit-btn"
+      mat-raised-button
+      color="primary"
+      (click)="startEditing()"
+    >
+      Edit
+    </button>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Personal Information</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <p><strong>First Name:</strong> {{ personalInfo.firstName }}</p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>Middle Name:</strong> {{ personalInfo.middleName }}</p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>Last Name:</strong> {{ personalInfo.lastName }}</p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Preferred Name:</strong> {{ personalInfo.preferredName }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>Username:</strong> {{ personalInfo.username }}</p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>Email:</strong> {{ personalInfo.email }}</p>
+        </div>
+
+        <div fxFlex="40">
+          <p><strong>Gender:</strong> {{ personalInfo.gender }}</p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>SSN:</strong> {{ personalInfo.ssn }}</p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Date of Birth:</strong>
+            {{ personalInfo.dateOfBirth | date : "longDate" }}
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Current Address</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <p>
+            <strong>Street:</strong> {{ personalInfo.currentAddress.street }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>City:</strong> {{ personalInfo.currentAddress.city }}</p>
+        </div>
+
+        <div fxFlex="40">
+          <p><strong>State:</strong> {{ personalInfo.currentAddress.state }}</p>
+        </div>
+        <div fxFlex="40">
+          <p><strong>ZIP:</strong> {{ personalInfo.currentAddress.zip }}</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Contact Information</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <p>
+            <strong>Cell Phone Number:</strong>
+            {{ personalInfo.cellPhoneNumber }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Work Phone Number:</strong>
+            {{ personalInfo.workPhoneNumber }}
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Reference</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <p><strong>Name:</strong> {{ personalInfo.reference.firstName }}</p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Middle Name:</strong>
+            {{ personalInfo.reference.middleName }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Last Name:</strong> {{ personalInfo.reference.lastName }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Email:</strong>
+            {{ personalInfo.reference.email }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Phone Number:</strong>
+            {{ personalInfo.reference.phone }}
+          </p>
+        </div>
+        <div fxFlex="40">
+          <p>
+            <strong>Relation:</strong>
+            {{ personalInfo.reference.relationship }}
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Emergency Contacts</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content fxLayout="column" fxLayoutGap="10px">
+        <div
+          *ngFor="let contact of personalInfo.emergencyContacts"
+          fxLayout="row"
+          fxLayoutGap="10px"
+        >
+          <div fxFlex="40">
+            <p>
+              <strong>Name:</strong> {{ contact.firstName }}
+              {{ contact.middleName }} {{ contact.lastName }}
+            </p>
+          </div>
+          <div fxFlex="40">
+            <p><strong>Phone:</strong> {{ contact.phone }}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Uploaded Documents</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40" *ngIf="personalInfo.driverLicense.uploadedLicense">
+          <p>
+            <strong>Driver Licence:</strong>
+            <a
+              href="{{ personalInfo.driverLicense.uploadedLicense }}"
+              target="_blank"
+              >Preview</a
+            >
+            <a href="{{ personalInfo.driverLicense.uploadedLicense }}" download
+              >Download</a
+            >
+          </p>
+        </div>
+        <div fxFlex="40" *ngIf="personalInfo.profilePicture">
+          <p>
+            <strong>Profile Picture: </strong>
+            <a href="{{ personalInfo.profilePicture }}" target="_blank"
+              >Preview</a
+            >
+            <a href="{{ personalInfo.profilePicture }}" download>Download</a>
+          </p>
+        </div>
+        <div fxFlex="40" *ngIf="personalInfo.citizenStatus.file">
+          <p>
+            <strong>Work Authrization: </strong>
+            <a href="{{ personalInfo.citizenStatus.file }}" target="_blank"
+              >Preview</a
+            >
+            <a href="{{ personalInfo.citizenStatus.file }}" download
+              >Download</a
+            >
+          </p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <ng-template #editMode>
+    <button
+      class="cancel-btn"
+      mat-raised-button
+      color="primary"
+      (click)="cancelEditing()"
+    >
+      Cancel
+    </button>
+    <button
+      class="save-btn"
+      mat-raised-button
+      color="primary"
+      (click)="saveChanges(editingPersonalInfo)"
+    >
+      Save
+    </button>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Personal Information</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.firstName" />
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Middle Name</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.middleName" />
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.lastName" />
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Preferred Name</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.preferredName" />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.username" />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <p><strong>Email:</strong> {{ personalInfo.email }}</p>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Gender</mat-label>
+            <select matNativeControl [(ngModel)]="editingPersonalInfo.gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="noanswer">I do not wish to answer</option>
+            </select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>SSN</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.ssn" />
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Date Of Birth</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.dateOfBirth"
+              type="date"
+            />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Current Address</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Street</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.currentAddress.street"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.currentAddress.city"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.currentAddress.state"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>ZIP</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.currentAddress.zip"
+            />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Contact Information</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Cell Phone Number</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.cellPhoneNumber" />
+          </mat-form-field>
+        </div>
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Work Phone Number</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.workPhoneNumber" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Reference</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.reference.firstName"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Middle Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.reference.middleName"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.reference.lastName"
+            />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.reference.email" />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input matInput [(ngModel)]="editingPersonalInfo.reference.phone" />
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="40">
+          <mat-form-field appearance="fill">
+            <mat-label>Relation</mat-label>
+            <input
+              matInput
+              [(ngModel)]="editingPersonalInfo.reference.relationship"
+            />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Emergency Contacts</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content fxLayout="column" fxLayoutGap="10px">
+        <div
+          *ngFor="let contact of editingPersonalInfo.emergencyContacts"
+          fxLayout="row"
+          fxLayoutGap="10px"
+        >
+          <div fxFlex="40">
+            <mat-form-field appearance="fill">
+              <mat-label>First Name</mat-label>
+              <input matInput [(ngModel)]="contact.firstName" />
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="40">
+            <mat-form-field appearance="fill">
+              <mat-label>Middle Name</mat-label>
+              <input matInput [(ngModel)]="contact.middleName" />
+            </mat-form-field>
+          </div>
+          <div fxFlex="40">
+            <mat-form-field appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input matInput [(ngModel)]="contact.lastName" />
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="40">
+            <mat-form-field appearance="fill">
+              <mat-label>Phone</mat-label>
+              <input matInput [(ngModel)]="contact.phone" />
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="section">
+      <mat-card-header>
+        <mat-card-title>Uploaded Documents</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content
+        fxLayout="row wrap"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start center"
+      >
+        <div fxFlex="40">
+          <label for="uploadedLicense">Driver License:</label>
+          <input
+            type="file"
+            id="uploadedLicense"
+            (change)="onFileChange($event, 'uploadedLicense')"
+          />
+        </div>
+        <div fxFlex="40">
+          <label for="profilePicture">Profile Picture:</label>
+          <input
+            type="file"
+            id="profilePicture"
+            (change)="onFileChange($event, 'profilePicture')"
+          />
+        </div>
+
+        <div fxFlex="40">
+          <label for="workAuthFile">Work Authorization File:</label>
+          <input
+            type="file"
+            id="workAuthFile"
+            (change)="onFileChange($event, 'workAuthFile')"
+          />
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

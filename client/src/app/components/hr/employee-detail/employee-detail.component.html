@@ -1,0 +1,213 @@
+<app-navbar-hr></app-navbar-hr>
+<div *ngIf="user$ | async as user">
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Personal Information</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="30">
+        <p><strong>First Name:</strong> {{ user.firstName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Middle Name:</strong> {{ user.middleName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Preferred Name:</strong> {{ user.preferredName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Gender:</strong> {{ user.gender }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>SSN:</strong> {{ user.ssn }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Current Address</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="40">
+        <p><strong>Street:</strong> {{ user.currentAddress.street }}</p>
+      </div>
+      <div fxFlex="40">
+        <p><strong>City:</strong> {{ user.currentAddress.city }}</p>
+      </div>
+      <div fxFlex="40">
+        <p><strong>State:</strong> {{ user.currentAddress.state }}</p>
+      </div>
+      <div fxFlex="40">
+        <p><strong>ZIP:</strong> {{ user.currentAddress.zip }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Contact Information</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="30">
+        <p><strong>Cell Phone Number:</strong> {{ user.cellPhoneNumber }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Work Phone Number:</strong> {{ user.workPhoneNumber }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Car Information</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="30">
+        <p><strong>Make:</strong> {{ user.carInformation.make }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Model:</strong> {{ user.carInformation.model }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Color:</strong> {{ user.carInformation.color }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Reference</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="30">
+        <p><strong>Name:</strong> {{ user.reference.firstName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Name:</strong> {{ user.reference.middleName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Name:</strong> {{ user.reference.lastName }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Email:</strong> {{ user.reference.email }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Phone Number:</strong> {{ user.reference.phone }}</p>
+      </div>
+      <div fxFlex="30">
+        <p><strong>Relation:</strong> {{ user.reference.relationship }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Emergency Contacts</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <div
+        *ngFor="let contact of user.emergencyContacts"
+        fxLayout="row"
+        fxLayoutGap="10px"
+      >
+        <div fxFlex="50">
+          <p>
+            <strong>Name:</strong> {{ contact.firstName }}
+            {{ contact.middleName }} {{ contact.lastName }}
+          </p>
+        </div>
+        <div fxFlex="50">
+          <p><strong>Phone:</strong> {{ contact.phone }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="section">
+    <mat-card-header>
+      <mat-card-title>Uploaded Documents</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content
+      fxLayout="row wrap"
+      fxLayoutGap="10px"
+      fxLayoutAlign="start center"
+    >
+      <div fxFlex="30">
+        <p>
+          <strong>Expiration Date:</strong>
+          {{ user.driverLicense.expirationDate }}
+        </p>
+      </div>
+      <div fxFlex="30">
+        <p>
+          <strong>Licence Number:</strong>
+          {{ user.driverLicense.licenseNumber }}
+        </p>
+      </div>
+      <div fxFlex="30">
+        <p>
+          <strong>Driver Licence:&nbsp;</strong>
+          <a href="{{ user.driverLicense.uploadedLicense }}" target="_blank"
+            >Preview</a
+          >
+          <span>&nbsp;</span>
+          <a href="{{ user.driverLicense.uploadedLicense }}" download
+            >Download</a
+          >
+        </p>
+      </div>
+      <div fxFlex="30">
+        <p>
+          <strong>Profile Picture:&nbsp;</strong>
+          <a href="{{ user.profilePicture }}" target="_blank">Preview</a>
+          <span>&nbsp;</span>
+          <a href="{{ user.profilePicture }}" download>Download</a>
+        </p>
+      </div>
+      <div fxFlex="30">
+        <p>
+          <strong>Work Authorization:&nbsp;</strong>
+          <a href="{{ user.citizenStatus.file }}" target="_blank">Preview</a>
+          <span>&nbsp;</span>
+          <a href="{{ user.citizenStatus.file }}" download>Download</a>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

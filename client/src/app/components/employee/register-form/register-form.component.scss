@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+mat-error {
+  color: red;
+}
+
+button {
+  margin-top: 20px;
+  align-self: flex-end;
+}

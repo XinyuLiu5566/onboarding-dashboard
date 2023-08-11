@@ -1,0 +1,18 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  color: black;
+  margin-top: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.file-info {
+  margin-top: 40px;
+}

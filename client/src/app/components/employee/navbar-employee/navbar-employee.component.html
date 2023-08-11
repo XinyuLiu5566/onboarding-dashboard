@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/employee/personal-info"
+    >Onboarding App</a
+  >
+
+  <div class="collapse navbar-collapse justify-content-between">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/employee/personal-info"
+          >Personal Information</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/employee/visa-status"
+          >Visa Status Management</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/employee/housing">Housing</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="login-buttons">
+          <a
+            class="nav-link"
+            *ngIf="isAuthenticated"
+            (click)="logout()"
+            routerLink="/login"
+            >Logout</a
+          >
+          <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/register"
+            >Register</a
+          >
+          <a class="nav-link" *ngIf="!isAuthenticated" routerLink="/login"
+            >Login</a
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>

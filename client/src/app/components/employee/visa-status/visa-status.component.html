@@ -1,0 +1,141 @@
+<app-navbar-employee></app-navbar-employee>
+<div *ngIf="visaStatus$ | async as visaStatus">
+  <ng-container *ngIf="visaStatus.workAuthorization === 'F1(CPT/OPT)'">
+    <mat-card class="section" *ngIf="visaStatus.optReceipt">
+      <mat-card-header>
+        <mat-card-title>OPT Receipt</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p [ngSwitch]="visaStatus.optReceipt.status">
+          <ng-container *ngSwitchCase="'Pending'"
+            >Waiting for HR to approve your OPT Receipt.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Approved'">
+            Your OPT has been approved! Please upload a copy of your OPT
+            EAD.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Rejected'">
+            {{ visaStatus.optReceipt.feedback }}
+            Resubmit your OPT Receipt<input
+              type="file"
+              (change)="onOptReceiptFileChange($event)"
+            />
+          </ng-container>
+        </p>
+        <a mat-button [href]="visaStatus.optReceipt.file" target="_blank"
+          >View Document</a
+        >
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="section"
+      *ngIf="
+        visaStatus.optReceipt && visaStatus.optReceipt.status === 'Approved'
+      "
+    >
+      <mat-card-header>
+        <mat-card-title>OPT EAD</mat-card-title></mat-card-header
+      >
+
+      <mat-card-content>
+        <p *ngIf="!visaStatus.optEad">
+          Upload Your OPT EAD:
+          <input type="file" (change)="onOptEADFileChange($event)" />
+        </p>
+
+        <p [ngSwitch]="visaStatus.optEad.status">
+          <ng-container *ngSwitchCase="'Pending'"
+            >Waiting for HR to approve your OPT EAD.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Approved'"
+            >You EAD document has been approved! Please download and fill out
+            the I-983 form.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Rejected'">
+            {{ visaStatus.optEad.feedback }}
+            Resubmit your OPT EAD<input
+              type="file"
+              (change)="onOptEADFileChange($event)"
+            />
+          </ng-container>
+        </p>
+        <a mat-button [href]="visaStatus.optEad.file" target="_blank"
+          >View Document</a
+        >
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="section"
+      *ngIf="visaStatus.optEad && visaStatus.optEad.status === 'Approved'"
+    >
+      <mat-card-header><mat-card-title>I-983</mat-card-title></mat-card-header>
+
+      <mat-card-content>
+        <p *ngIf="!visaStatus.i983">
+          Upload Your I-983:
+          <input type="file" (change)="onI983FileChange($event)" />
+        </p>
+        <p [ngSwitch]="visaStatus.i983.status">
+          <ng-container *ngSwitchCase="'Pending'"
+            >Waiting for HR to approve and sign your I-983.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Approved'"
+            >Please send the I-983 along with all necessary documents to your
+            school and upload the new I-20.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Rejected'">
+            {{ visaStatus.i983.feedback }}
+            Resubmit your OPT i983<input
+              type="file"
+              (change)="onI983FileChange($event)"
+            />
+          </ng-container>
+        </p>
+        <a mat-button [href]="visaStatus.i983.file" target="_blank"
+          >View Document</a
+        >
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card
+      class="section"
+      *ngIf="visaStatus.i983 && visaStatus.i983.status === 'Approved'"
+    >
+      <mat-card-header><mat-card-title>I-20</mat-card-title></mat-card-header>
+
+      <mat-card-content>
+        <p *ngIf="!visaStatus.i20">
+          Upload Your I-20:
+          <input type="file" (change)="onI20FileChange($event)" />
+        </p>
+        <p [ngSwitch]="visaStatus.i20.status">
+          <ng-container *ngSwitchCase="'Pending'"
+            >Waiting for HR to approve your I-20.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Approved'"
+            >All documents have been approved.</ng-container
+          >
+          <ng-container *ngSwitchCase="'Rejected'">
+            {{ visaStatus.i20.feedback }}
+            Resubmit your OPT i983<input
+              type="file"
+              (change)="onI20FileChange($event)"
+            />
+          </ng-container>
+        </p>
+        <!-- The link for i20 is not present in the provided object -->
+        <!-- <a mat-button [href]="visaStatus.i20.file" target="_blank">View Document</a> -->
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <ng-container
+    *ngIf="visaStatus.workAuthorization !== 'F1(CPT/OPT)'"
+    class="section"
+  >
+    <p>You can only edit your file if your are on F1(CPT/OPT)</p>
+  </ng-container>
+</div>
